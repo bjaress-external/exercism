@@ -5,10 +5,11 @@ import qualified Data.Maybe as Maybe
 import qualified Data.Char as Char
 
 responseFor :: String -> String
-responseFor xs = Maybe.fromMaybe "Whatever." $
+responseFor chars = Maybe.fromMaybe "Whatever." $
     asSilence nub <|> asShout nub <|> asQuestion nub
     where
-    nub = filter (not . Char.isSpace) xs
+    -- strip out all spaces
+    nub = filter (not . Char.isSpace) chars
 
 asSilence [] = Just "Fine. Be that way!"
 asSilence _ = Nothing
@@ -21,7 +22,6 @@ asShout chars =
     someUpper = any Char.isUpper
     noLower = all (not . Char.isLower)
 
-asQuestion = detect . reverse
-    where
-    detect ('?':xs) = Just "Sure."
-    detect _ = Nothing
+asQuestion chars = if length chars > 0 && (last chars) == '?'
+    then Just "Sure."
+    else Nothing
