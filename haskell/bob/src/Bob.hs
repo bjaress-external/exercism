@@ -1,26 +1,27 @@
 module Bob (responseFor) where
 
+import Control.Applicative ((<|>))
+import qualified Data.Maybe as Maybe
 import qualified Data.Char as Char
 
 responseFor :: String -> String
-responseFor raw = if isSilence xs
-    then "Fine. Be that way!"
-    else
-        if isShouting xs
-        then "Whoa, chill out!"
-        else
-            if isQuestion xs
-            then "Sure."
-            else "Whatever."
+responseFor xs = Maybe.fromMaybe "Whatever." $
+    asSilence trimmed <|> asShout trimmed <|> asQuestion trimmed
     where
-    xs = filter (not . Char.isSpace) raw
+    trimmed = filter (not . Char.isSpace) xs
 
-isSilence [] = True
-isSilence _ = False
+asSilence [] = Just "Fine. Be that way!"
+asSilence _ = Nothing
 
-isQuestion = detect . reverse
+asQuestion = detect . reverse
     where
-    detect ('?':xs) = True
-    detect _ = False
+    detect ('?':xs) = Just "Sure."
+    detect _ = Nothing
 
-isShouting chars = any Char.isUpper chars && all (not . Char.isLower) chars
+asShout chars =
+    if someUpper chars && noLower chars
+        then Just "Whoa, chill out!"
+        else Nothing
+    where
+    someUpper = any Char.isUpper
+    noLower = all (not . Char.isLower)
