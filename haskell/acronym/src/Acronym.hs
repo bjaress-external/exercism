@@ -16,7 +16,14 @@ abbreviate = either (const []) id . Parsec.parse parser ""
 
     word = allLower <|> someHigher
     allLower = Parsec.many1 PChar.lower
-    someHigher = concat <$> sequence [ Parsec.many1 PChar.upper, Parsec.many PChar.lower]
+    -- Uppercase always before lowercase in the same word.
+    -- CamelCase will be multiple words with zero-length noise.
+    someHigher = inOrder [ Parsec.many1 PChar.upper, Parsec.many PChar.lower]
 
 initials :: [String] -> String
 initials = fmap (Char.toUpper . head)
+
+-- This seems like it should exist, but I can't find it.
+inOrder :: [Parsec.Parsec [a] st [a]] -> Parsec.Parsec [a] st [a]
+inOrder = fmap concat . sequence
+
