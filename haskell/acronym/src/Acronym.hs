@@ -14,11 +14,11 @@ abbreviate = either (const []) id . Parsec.parse parser ""
 
     noise = Parsec.many $ PChar.satisfy (not . Char.isAlpha)
 
-    word = allLower <|> someHigher
+    word = allLower <|> someUpper
     allLower = Parsec.many1 PChar.lower
     -- Uppercase always before lowercase in the same word.
     -- CamelCase will be multiple words with zero-length noise.
-    someHigher = inOrder [ Parsec.many1 PChar.upper, Parsec.many PChar.lower]
+    someUpper = inOrder [ Parsec.many1 PChar.upper, Parsec.many PChar.lower]
 
 initials :: [String] -> String
 initials = fmap (Char.toUpper . head)
