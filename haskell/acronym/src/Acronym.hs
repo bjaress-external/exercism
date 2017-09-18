@@ -18,12 +18,15 @@ abbreviate = either (const []) id . Parsec.parse parser ""
     allLower = Parsec.many1 PChar.lower
     -- Uppercase always before lowercase in the same word.
     -- CamelCase will be multiple words with zero-length noise.
-    someUpper = inOrder [ Parsec.many1 PChar.upper, Parsec.many PChar.lower]
+    someUpper = inSequence
+        [ Parsec.many1 PChar.upper
+        , Parsec.many PChar.lower
+        ]
 
 initials :: [String] -> String
 initials = fmap (Char.toUpper . head)
 
 -- This seems like it should exist, but I can't find it.
-inOrder :: [Parsec.Parsec [a] st [a]] -> Parsec.Parsec [a] st [a]
-inOrder = fmap concat . sequence
+inSequence :: [Parsec.Parsec [a] b [c]] -> Parsec.Parsec [a] b [c]
+inSequence = fmap concat . sequence
 
