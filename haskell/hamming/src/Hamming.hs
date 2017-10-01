@@ -1,8 +1,9 @@
 module Hamming (distance) where
 
 distance :: String -> String -> Maybe Int
-distance xs ys
-    | length xs /= length ys = Nothing
-    | otherwise = Just $ countFalse $ zipWith (==) xs ys
 
-countFalse = length . filter not
+distance (x:xs) (y:ys) = fmap (+diff) $ distance xs ys
+    where
+    diff = (if x == y then 0 else 1)
+distance [] [] = Just 0
+distance xs ys = Nothing
