@@ -18,3 +18,6 @@ tests:
     dependencies:
       - hamming
       - hspec
+
+ghc-options:
+  -Wall

@@ -6,4 +6,4 @@ distance (x:xs) (y:ys) = fmap (+diff) $ distance xs ys
     where
     diff = (if x == y then 0 else 1)
 distance [] [] = Just 0
-distance xs ys = Nothing
+distance  _  _ = Nothing
