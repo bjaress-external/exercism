@@ -5,20 +5,21 @@ import qualified Data.Map as Map
 nucleotides = "ACGT"
 bad = 'X'
 
-zeros = Map.fromList [(nuc, 0) | nuc <- nucleotides]
-
 nucleotideCounts :: String -> Either String (Map.Map Char Int)
 nucleotideCounts = validate . count
 
 count::String -> Map.Map Char Int
-count = Map.fromListWith (+) . pairs . fmap flagBad
+count = Map.fromListWith (+) . fmap (increment . flagBad)
     where
-    pairs chars = [(c, 1) | c <- chars]
+    increment = pairWith 1
     flagBad char
         | elem char nucleotides = char
         | otherwise = bad
 
+validate totals
+    | Map.member bad totals = Left (show $ Map.lookup bad totals)
+    | otherwise = (Right . Map.union totals . zeros) nucleotides
+    where
+    zeros = Map.fromList . fmap (pairWith 0)
 
-validate map
-    | Map.member bad map = Left "non-nucleotide"
-    | otherwise = Right $ Map.union map zeros
+pairWith = flip (,)
