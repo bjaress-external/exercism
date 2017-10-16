@@ -24,6 +24,3 @@ validate totals
     | otherwise = Right totals
     where
     countBad = show . Map.lookup bad
-
-
-pairWith = flip (,)
