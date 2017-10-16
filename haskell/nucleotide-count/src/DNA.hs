@@ -9,14 +9,11 @@ nucleotideCounts :: String -> Either String (Map.Map Char Int)
 nucleotideCounts = validate . count
 
 count::String -> Map.Map Char Int
-count = Map.fromListWith (+) . (zeros ++) . fmap one
+count = Map.fromListWith (+) . (zeros ++) . fmap (has 1)
     where
     zeros = fmap (has 0) nucleotides
-    one char
-        | elem char nucleotides = has 1 char
-        | otherwise = has 1 bad
     has = flip (,)
 
 validate totals
-    | Map.member bad totals = Left (show totals)
-    | otherwise = Right totals
+    | Map.size totals == length nucleotides = Right totals
+    | otherwise = Left (show totals)
