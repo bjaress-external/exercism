@@ -12,7 +12,7 @@ empty :: School
 empty = Map.empty
 
 grade :: Int -> School -> [String]
-grade gradeNum school = error "You need to implement this function."
+grade gradeNum school = concat $ fmap Set.toAscList $  maybeToList $ Map.lookup grade school
 
 sorted :: School -> [(Int, [String])]
 sorted = (fmap . fmap) Set.toAscList . Map.toAscList
