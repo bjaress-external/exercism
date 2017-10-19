@@ -10,11 +10,9 @@ import qualified Data.Maybe as Maybe
 type School = Map.IntMap (Set.Set String)
 
 add :: Int -> String -> School -> School
-add gradeNum student school
-    | Map.member gradeNum school =
-        Map.adjust (Set.insert student) gradeNum school
-    | otherwise =
-        Map.insert gradeNum (Set.singleton student) school
+add = flip (Map.alter . inserter)
+    where
+    inserter student = Just . maybe (Set.singleton student) (Set.insert student)
 
 empty :: School
 empty = Map.empty
