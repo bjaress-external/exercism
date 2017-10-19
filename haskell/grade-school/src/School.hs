@@ -9,6 +9,7 @@ import qualified Data.Maybe as Maybe
 
 type School = Map.IntMap (Set.Set String)
 
+
 add :: Int -> String -> School -> School
 add = Map.insertWith Set.union `wrap` Set.singleton
     where
