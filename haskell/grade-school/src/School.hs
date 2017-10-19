@@ -17,7 +17,6 @@ empty :: School
 empty = Map.empty
 
 grade :: Int -> School -> [String]
---grade gradeNum school = concat $ Maybe.maybeToList $ fmap Set.toAscList $ Map.lookup gradeNum school
 grade gradeNum school = maybe [] Set.toAscList $ Map.lookup gradeNum school
 
 sorted :: School -> [(Int, [String])]
