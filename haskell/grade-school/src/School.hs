@@ -7,7 +7,11 @@ import qualified Data.Maybe as Maybe
 type School = Map.IntMap (Set.Set String)
 
 add :: Int -> String -> School -> School
-add gradeNum student school = error "You need to implement this function."
+add gradeNum student school
+    | Map.member gradeNum school =
+        Map.adjust (Set.insert student) gradeNum school
+    | otherwise =
+        Map.insert gradeNum (Set.singleton student) school
 
 empty :: School
 empty = Map.empty

@@ -3,7 +3,6 @@ module DNA (nucleotideCounts) where
 import qualified Data.Map.Strict as Map
 
 nucleotides = "ACGT"
-bad = 'X'
 
 nucleotideCounts :: String -> Either String (Map.Map Char Int)
 nucleotideCounts = validate . count
