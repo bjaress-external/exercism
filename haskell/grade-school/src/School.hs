@@ -26,4 +26,7 @@ grade = Set.toAscList `from` Map.findWithDefault (Set.empty)
     from = ((.).(.))
 
 sorted :: School -> [(Int, [String])]
-sorted = (fmap . fmap) Set.toAscList . Map.toAscList
+sorted = convert Set.toAscList . Map.toAscList
+    where
+    -- map over pairs within lists
+    convert = fmap . fmap
