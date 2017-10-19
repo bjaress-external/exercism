@@ -10,16 +10,18 @@ import qualified Data.Maybe as Maybe
 type School = Map.IntMap (Set.Set String)
 
 add :: Int -> String -> School -> School
-add = flip (Map.alter . inserter)
+add = Map.insertWith Set.union `wrap` Set.singleton
     where
-    inserter student = Just . maybe (Set.singleton student) (Set.insert student)
+    -- magic compose on second argument
+    wrap = flip . ((.) .)
 
 empty :: School
 empty = Map.empty
 
 grade :: Int -> School -> [String]
-grade = maybe [] Set.toAscList `from` Map.lookup
+grade = Set.toAscList `from` Map.findWithDefault (Set.empty)
     where
+    -- magic compose with two-arg function
     from = ((.).(.))
 
 sorted :: School -> [(Int, [String])]
