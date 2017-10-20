@@ -20,10 +20,10 @@ empty :: School
 empty = Map.empty
 
 grade :: Int -> School -> [String]
-grade = Set.toAscList `from` Map.findWithDefault (Set.empty)
+grade = Set.toAscList `from` Map.findWithDefault Set.empty
     where
     -- magic compose with two-arg function
-    from = ((.).(.))
+    from = (.).(.)
 
 sorted :: School -> [(Int, [String])]
 sorted = convert Set.toAscList . Map.toAscList
