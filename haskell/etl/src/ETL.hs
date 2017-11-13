@@ -1,6 +1,13 @@
+{-# LANGUAGE TupleSections #-}
+
 module ETL (transform) where
 
-import Data.Map (Map)
+import qualified Data.Map.Lazy as Map
+import qualified Data.Char as Char
 
-transform :: Map a String -> Map Char a
-transform legacyData = error "You need to implement this function."
+transform :: Map.Map Int String -> Map.Map Char Int
+transform legacyData = Map.foldlWithKey accumulate Map.empty legacyData
+    where
+    accumulate :: Map.Map Char Int -> Int -> String -> Map.Map Char Int
+    accumulate newTable points letters = Map.union newTable $ Map.fromList $ pairs points letters
+    pairs points letters = fmap ( (,points) . Char.toLower) letters
