@@ -1,15 +1,15 @@
-{-# LANGUAGE TupleSections #-}
-
 module ETL (transform) where
 
 import qualified Data.Map.Lazy as Map
 import qualified Data.Char as Char
+import qualified Data.Tuple as Tuple
 
 transform :: Map.Map Int String -> Map.Map Char Int
-transform legacyData = Map.foldlWithKey accumulate Map.empty legacyData
+transform = Map.fromList . fmap normalize . (>>= decompose) . Map.toList
     where
-    accumulate :: Map.Map Char Int -> Int -> String -> Map.Map Char Int
-    accumulate newTable points letters = Map.union newTable $ Map.fromList $ pairs points letters
-    pairs :: Int -> String -> [(Char, Int)]
-    pairs = fmap . flip ( (,) . Char.toLower )
 
+    normalize :: (Int, Char) -> (Char, Int)
+    normalize = Tuple.swap . fmap Char.toLower
+
+    decompose :: (Int, String) -> [(Int, Char)]
+    decompose = uncurry $ fmap . (,)
