@@ -11,6 +11,8 @@ convert n
     | plong n = "Plong"
     | otherwise = show n
 
-pling n = n `mod` 3 == 0
-plang n = n `mod` 5 == 0
-plong n = n `mod` 7 == 0
+pling = check 3
+plang = check 5
+plong = check 7
+
+check k n = n `mod` k == 0
