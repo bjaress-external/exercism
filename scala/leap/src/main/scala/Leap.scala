@@ -1,6 +1,8 @@
 object Leap {
   def leapYear(year: Int): Boolean =
-    if (year % 400 == 0) true
-    else if (year % 100 == 0) false
-    else year % 4 == 0
+    if      (mult(year, 400)) true
+    else if (mult(year, 100)) false
+    else     mult(year, 4)
+
+  def mult(value: Int, factor: Int) = value % factor == 0
 }
