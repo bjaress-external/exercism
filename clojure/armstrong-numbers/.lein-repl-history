@@ -1,0 +1,232 @@
+str
+(str 5)
+(str 10)
+(seq (str 10))
+(map str (seq (str 10)))
+(map read-string (map str (seq (str 10))))
+(def a 0)
+a
+(def a {:foo 1 :bar 2})
+a
+(get :foo a)
+(get a :foo)
+(get a :fob)
+(get a :fob 3)
+(quot 13 10)
+(quot 23 10)
+(rem 23 10)
+(print "f"
+)
+(let [{:foo foo} a] (print f))
+(let [{:foo foo :bar bar} a] (print f))
+(let [{:foo foo :bar bar} a] (print foo))
+a
+(let [{:foo foo} a] (print foo))
+(let [{foo :foo} a] (print foo))
+(defn divide-step [previous]
+  (let [{prev :quot} previous]
+    {:quot (quot prev 10)
+     :rem (rem prev 10)}))
+(divide-step {:quot 34 :rem 0})
+(divide-step {:quot 3471 :rem 0})
+(divide-step {:quot 347 :rem 1})
+(> 0)
+((comp :quot pos?) {:quot 34, :rem 7})
+(:quot {:quot 34, :rem 7})
+((comp pos? :quot) {:quot 34, :rem 7})
+(defn armstrong? [num] ;; <- arglist goes here
+  (def digits
+    (take-while (comp pos? :quot)
+                (iterate divide-step num)))
+)
+(armstring? 123)
+(armstrong? 123)
+(defn armstrong? [num] ;; <- arglist goes here
+  (def digits
+    (take-while (comp pos? :quot)
+                (iterate divide-step num)))
+  digits
+)
+(armstrong? 123)
+(defn divide-step [previous]
+  (let [{prev :quot} previous]
+    {:quot (quot prev 10)
+     :rem (rem prev 10)}))
+(defn armstrong? [num] ;; <- arglist goes here
+  (def digits
+    (take-while (comp pos? :quot)
+                (iterate divide-step num)))
+  digits
+)
+(armstrong? 123)
+(take 10 (iterate divide-step 123))
+(take 1 (iterate divide-step 123))
+(take 1 (iterate divide-step {:quot 123}))
+(take 3 (iterate divide-step {:quot 123}))
+(take 3 (rest (iterate divide-step {:quot 123})))
+(defn armstrong? [num] ;; <- arglist goes here
+  (def divisions
+    (take-while (comp pos? :quot)
+                (rest (iterate divide-step num))))
+  (map :rem divisions)
+)
+(defn divide-step [previous]
+  (let [{prev :quot} previous]
+    {:quot (quot prev 10)
+     :rem (rem prev 10)}))
+(armstrong? 123)
+(take 10 (rest (iterate divide-step 123)))
+(take 3 (rest (iterate divide-step 123)))
+(take 1 (rest (iterate divide-step 123)))
+(defn armstrong? [num] ;; <- arglist goes here
+  (def divisions
+    (take-while (comp pos? :quot)
+                (rest (iterate divide-step {:quot num} ))))
+  (map :rem divisions)
+)
+(armstrong? 123)
+(ns armstrong-numbers)
+(defn armstrong? [num] ;; <- arglist goes here
+  (def divisions
+    (take-while (comp pos? :quot)
+                (iterate divide-step {:quot num} )))
+  (map :rem divisions)
+)
+(defn divide-step [previous]
+  (let [{prev :quot} previous]
+    {:quot (quot prev 10)
+     :rem (rem prev 10)}))
+(armstrong? 123)
+(defn armstrong? [num] ;; <- arglist goes here
+  (def divisions
+    (take-while (comp pos? :quot)
+                (iterate divide-step {:quot num} )))
+  (map :rem divisions)
+)
+(defn divide-step [previous]
+  (let [{prev :quot} previous]
+    {:quot (quot prev 10)
+     :rem (rem prev 10)}))
+(armstrong? 123)
+(defn divide-step [previous]
+  (let [{prev :quot} previous]
+    {:quot (quot prev 10)
+     :rem (rem prev 10)}))
+(defn armstrong? [num] ;; <- arglist goes here
+  (def divisions
+    (take-while (comp pos? :quot)
+                (iterate divide-step {:quot num} )))
+  (map :rem divisions)
+)
+(armstrong? 123)
+(defn divide-step [previous]
+  (let [{prev :quot} previous]
+    {:quot (quot prev 10)
+     :rem (rem prev 10)}))
+(defn armstrong? [num] ;; <- arglist goes here
+  (def divisions
+    (take-while (comp pos? :quot)
+                (iterate divide-step {:quot num} )))
+  divisions
+)
+(armstrong? 123)
+(or true false)
+(pos? 1 2 3)
+(pos? 1)
+(defn divide-step [previous]
+  (let [{prev :quot} previous]
+    {:quot (quot prev 10)
+     :rem (rem prev 10)}))
+(defn armstrong? [num] ;; <- arglist goes here
+  (def divisions
+    (take-while (fn [{q :quot r :rem}] (or (pos? q) (pos? r)))
+                (iterate divide-step {:quot num :rem 0} )))
+  divisions
+)
+(armstrong? 123)
+(defn armstrong? [num] ;; <- arglist goes here
+  ; Take quotient and remainder, divide quotient by 10 to get new
+  ; quotient and remainder
+  (defn divide-step [previous]
+    (let [{prev :quot} previous]
+      {:quot (quot prev 10)
+       :rem (rem prev 10)}))
+  (def divisions
+    ; Keep dividing until everything goes to 0
+    (take-while (fn [{q :quot r :rem}] (or (pos? q) (pos? r)))
+                (rest (iterate divide-step {:quot num :rem 0} ))))
+  (def digits (map :rem divisions))
+  digits
+)
+(armstrong? 123)
+(log 10 10)
+(length "foo")
+(string-length "foo")
+(+ 1 2 3)
+(+ '(1 2 3))
+(sum '(1 2 3))
+(ns armstrong-numbers
+  (:require [clojure.math.numeric-tower :as numeric])
+(defn armstrong? [num] ;; <- arglist goes here
+  ; Take quotient and remainder, divide quotient by 10 to get new
+  ; quotient and remainder
+  (defn divide-step [previous]
+    (let [{prev :quot} previous]
+      {:quot (quot prev 10)
+       :rem (rem prev 10)}))
+  (def divisions
+    ; Keep dividing until everything goes to 0
+    (take-while (fn [{q :quot r :rem}] (or (pos? q) (pos? r)))
+                (rest (iterate divide-step {:quot num :rem 0} ))))
+  (def digits (map :rem divisions))
+  (def digit-count (count digits))
+  (def total
+    (apply + (map (fn [digit] (numeric/expt digit digit-count)) digits)))
+  total
+)
+(armstrong? 123)
+(ns armstrong-numbers
+  (:require [clojure.math.numeric-tower :as numeric]))
+(defn armstrong? [num] ;; <- arglist goes here
+  ; Take quotient and remainder, divide quotient by 10 to get new
+  ; quotient and remainder
+  (defn divide-step [previous]
+    (let [{prev :quot} previous]
+      {:quot (quot prev 10)
+       :rem (rem prev 10)}))
+  (def divisions
+    ; Keep dividing until everything goes to 0
+    (take-while (fn [{q :quot r :rem}] (or (pos? q) (pos? r)))
+                (rest (iterate divide-step {:quot num :rem 0} ))))
+  (def digits (map :rem divisions))
+  (def digit-count (count digits))
+  (def total
+    (apply + (map (fn [digit] (numeric/expt digit digit-count)) digits)))
+  total
+)
+(armstrong? 123)
+(use 'clojure.math.numeric-tower)
+(ns armstrong-numbers
+  (:require [clojure.math.numeric-tower :as numeric]))
+(defn armstrong? [num] ;; <- arglist goes here
+  ; Take quotient and remainder, divide quotient by 10 to get new
+  ; quotient and remainder
+  (defn divide-step [previous]
+    (let [{prev :quot} previous]
+      {:quot (quot prev 10)
+       :rem (rem prev 10)}))
+  (def divisions
+    ; Keep dividing until everything goes to 0
+    (take-while (fn [{q :quot r :rem}] (or (pos? q) (pos? r)))
+                (rest (iterate divide-step {:quot num :rem 0} ))))
+  (def digits (map :rem divisions))
+  (def digit-count (count digits))
+  (def total
+    (apply + (map (fn [digit] (numeric/expt digit digit-count)) digits)))
+  total
+)
+(armstrong? 123)
+(1 8 27)
+(+ 1 8 27)
+(= 3 2)
+(= 3 3)
