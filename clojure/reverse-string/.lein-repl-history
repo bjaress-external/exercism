@@ -1,0 +1,6 @@
+(rest "foo")
+(str (rest "foo"))
+(join (rest "foo"))
+(require '[clojure.string :as string]))
+(require '[clojure.string :as string])
+(string/join (rest "foo"))
