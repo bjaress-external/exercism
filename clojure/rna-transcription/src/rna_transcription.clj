@@ -1,5 +1,14 @@
-(ns rna-transcription)
+(ns rna-transcription
+  (:require [clojure.string :as string]))
 
-(defn to-rna [dna] ;; <- arglist goes here
-  ;; your code goes here
-)
+(def complement {
+                 \G \C
+                 \C \G
+                 \T \A
+                 \A \U
+                 })
+
+(defn to-rna [dna]
+  (defn checked-complement [base]
+    (or (complement base) (assert false)))
+  (string/join (map checked-complement (seq dna))))
