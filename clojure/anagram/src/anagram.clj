@@ -1,11 +1,16 @@
 (ns anagram
   (:require [clojure.string :as str]))
 
-(defn match [target prospect]
-  (let [t (str/lower-case target)
-        p (str/lower-case prospect)]
-    (and (= (frequencies t) (frequencies p))
-         (not (= t p)))))
+(defn normalize [word]
+  (let [lower (str/lower-case word)
+        letters (frequencies lower)]
+    [lower letters]))
+
+(defn match [[target-word target-letters] [prospect-word prospect-letters]]
+  (and (= target-letters prospect-letters)
+       (not (= target-word prospect-word))))
 
 (defn anagrams-for [word prospect-list]
-  (filter (partial match word) prospect-list))
+  (filter (comp (partial match (normalize word))
+                normalize)
+          prospect-list))
